@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34714.143
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L01.AdoNetIntro", "AdoNetIntro\L01.AdoNetIntro.csproj", "{263F536F-0F77-41B7-A707-B18B61759473}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L02.VillainNames", "L02.VillainNames\L02.VillainNames.csproj", "{AC4EF4B2-881C-4255-8B84-172FD8E4AE10}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L03.MinionNames", "L03.MinionNames\L03.MinionNames.csproj", "{90D1B5DB-FBDF-4FD6-84D9-2698A1AA0899}"
@@ -13,13 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L04.AddMinion", "L04.AddMin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L05.ChangeTownNamesCasing", "L05.ChangeTownNamesCasing\L05.ChangeTownNamesCasing.csproj", "{C6C4ED15-0A3E-4517-8492-3E5C185A3451}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L06.RemoveVillain", "L06.RemoveVillain\L06.RemoveVillain.csproj", "{AD629267-19CE-4F75-A98C-5EBD086B26E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L06.RemoveVillain", "L06.RemoveVillain\L06.RemoveVillain.csproj", "{AD629267-19CE-4F75-A98C-5EBD086B26E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L07.PrintAllMinionNames", "L07.PrintAllMinionNames\L07.PrintAllMinionNames.csproj", "{075F1858-43B6-4721-94B1-4C4FEA2CE14F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L07.PrintAllMinionNames", "L07.PrintAllMinionNames\L07.PrintAllMinionNames.csproj", "{075F1858-43B6-4721-94B1-4C4FEA2CE14F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L08.IncreaseMinionAge", "L08.IncreaseMinionAge\L08.IncreaseMinionAge.csproj", "{59A2A324-8499-4B6A-BFFC-E6903A3C0C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L08.IncreaseMinionAge", "L08.IncreaseMinionAge\L08.IncreaseMinionAge.csproj", "{59A2A324-8499-4B6A-BFFC-E6903A3C0C2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L09.IncreaseAgeStoredProcedure", "L09.IncreaseAgeStoredProcedure\L09.IncreaseAgeStoredProcedure.csproj", "{7150E416-D72A-4A7D-A507-B06624D39E91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "L09.IncreaseAgeStoredProcedure", "L09.IncreaseAgeStoredProcedure\L09.IncreaseAgeStoredProcedure.csproj", "{7150E416-D72A-4A7D-A507-B06624D39E91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L01.AdoNetIntro", "L01.AdoNetIntro\L01.AdoNetIntro.csproj", "{07F2ECD5-635D-4915-9CFB-A89A218E69EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{263F536F-0F77-41B7-A707-B18B61759473}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{263F536F-0F77-41B7-A707-B18B61759473}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{263F536F-0F77-41B7-A707-B18B61759473}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{263F536F-0F77-41B7-A707-B18B61759473}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC4EF4B2-881C-4255-8B84-172FD8E4AE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC4EF4B2-881C-4255-8B84-172FD8E4AE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC4EF4B2-881C-4255-8B84-172FD8E4AE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -63,6 +59,10 @@ Global
 		{7150E416-D72A-4A7D-A507-B06624D39E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7150E416-D72A-4A7D-A507-B06624D39E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7150E416-D72A-4A7D-A507-B06624D39E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07F2ECD5-635D-4915-9CFB-A89A218E69EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F2ECD5-635D-4915-9CFB-A89A218E69EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F2ECD5-635D-4915-9CFB-A89A218E69EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F2ECD5-635D-4915-9CFB-A89A218E69EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
