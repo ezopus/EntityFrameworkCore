@@ -1,4 +1,4 @@
-﻿namespace E01.DBFirst
+﻿namespace Exercises07_15
 {
     internal class Program
     {

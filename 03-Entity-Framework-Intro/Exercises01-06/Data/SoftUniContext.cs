@@ -1,7 +1,10 @@
-﻿using E01.DBFirst.Models;
+﻿using System;
+using System.Collections.Generic;
+using Exercises01_06.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace E01.DBFirst.Data
+namespace Exercises01_06.Data
 {
     public partial class SoftUniContext : DbContext
     {
@@ -19,15 +22,13 @@ namespace E01.DBFirst.Data
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Project> Projects { get; set; } = null!;
         public virtual DbSet<Town> Towns { get; set; } = null!;
-        public virtual DbSet<VEmployeeNameJobTitle> VEmployeeNameJobTitles { get; set; } = null!;
-        public virtual DbSet<VEmployeesHiredAfter2000> VEmployeesHiredAfter2000s { get; set; } = null!;
-        public virtual DbSet<VEmployeesSalary> VEmployeesSalaries { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.;Database=SoftUni;Integrated Security=True;Trust Server Certificate=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("server=.;database=SoftUni;Trusted_Connection=True;Trust Server Certificate=True;");
             }
         }
 
@@ -62,6 +63,7 @@ namespace E01.DBFirst.Data
                 entity.HasOne(d => d.Manager)
                     .WithMany(p => p.Departments)
                     .HasForeignKey(d => d.ManagerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Departments_Employees");
             });
 
@@ -93,7 +95,7 @@ namespace E01.DBFirst.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Salary).HasColumnType("money");
+                entity.Property(e => e.Salary).HasColumnType("decimal(15, 4)");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Employees)
@@ -151,54 +153,6 @@ namespace E01.DBFirst.Data
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<VEmployeeNameJobTitle>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_EmployeeNameJobTitle");
-
-                entity.Property(e => e.FullName)
-                    .HasMaxLength(152)
-                    .IsUnicode(false)
-                    .HasColumnName("Full Name");
-
-                entity.Property(e => e.JobTitle)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<VEmployeesHiredAfter2000>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_EmployeesHiredAfter2000");
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-            });
-
-            modelBuilder.Entity<VEmployeesSalary>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToView("V_EmployeesSalaries");
-
-                entity.Property(e => e.FirstName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Salary).HasColumnType("money");
             });
 
             OnModelCreatingPartial(modelBuilder);
