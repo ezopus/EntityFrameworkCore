@@ -29,9 +29,10 @@ public class StartUp
 
 
         //Exercise 06. Adding a New Address and Updating Employee
-        string addressList = AddNewAddressToEmployee(context);
+        //string addressList = AddNewAddressToEmployee(context);
 
-        Console.WriteLine(addressList);
+        //Console.WriteLine(addressList);
+
 
     }
     public static string GetEmployeesFullInformation(SoftUniContext context)
