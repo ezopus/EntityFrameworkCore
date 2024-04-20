@@ -1,10 +1,9 @@
-﻿namespace Exercises01_06.Models;
-
+﻿namespace SoftUni.Models;
 public class Project
 {
     public Project()
     {
-        Employees = new HashSet<Employee>();
+        EmployeesProjects = new HashSet<EmployeeProject>();
     }
 
     public int ProjectId { get; set; }
@@ -13,8 +12,6 @@ public class Project
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
 
-    public virtual ICollection<Employee> Employees { get; set; }
+    public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
 }
-
-
 

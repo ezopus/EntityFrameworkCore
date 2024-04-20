@@ -1,5 +1,4 @@
-﻿namespace Exercises01_06.Models;
-
+﻿namespace SoftUni.Models;
 public class Department
 {
     public Department()

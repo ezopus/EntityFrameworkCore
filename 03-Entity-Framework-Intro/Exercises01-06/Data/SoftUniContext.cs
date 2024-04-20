@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Exercises01_06.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
+using SoftUni.Models;
 
-namespace Exercises01_06.Data
+namespace SoftUni.Data
 {
     public partial class SoftUniContext : DbContext
     {
@@ -22,13 +19,14 @@ namespace Exercises01_06.Data
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Project> Projects { get; set; } = null!;
         public virtual DbSet<Town> Towns { get; set; } = null!;
+        public virtual DbSet<EmployeeProject> EmployeesProjects { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("server=.;database=SoftUni;Trusted_Connection=True;Trust Server Certificate=True;");
+                optionsBuilder
+                    .UseSqlServer("Server=.;Database=SoftUni;Integrated Security=True;");
             }
         }
 
@@ -95,7 +93,7 @@ namespace Exercises01_06.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Salary).HasColumnType("decimal(15, 4)");
+                entity.Property(e => e.Salary).HasColumnType("money");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Employees)
@@ -113,22 +111,6 @@ namespace Exercises01_06.Data
                     .HasForeignKey(d => d.ManagerId)
                     .HasConstraintName("FK_Employees_Employees");
 
-                entity.HasMany(d => d.Projects)
-                    .WithMany(p => p.Employees)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "EmployeesProject",
-                        l => l.HasOne<Project>().WithMany().HasForeignKey("ProjectId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_EmployeesProjects_Projects"),
-                        r => r.HasOne<Employee>().WithMany().HasForeignKey("EmployeeId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_EmployeesProjects_Employees"),
-                        j =>
-                        {
-                            j.HasKey("EmployeeId", "ProjectId");
-
-                            j.ToTable("EmployeesProjects");
-
-                            j.IndexerProperty<int>("EmployeeId").HasColumnName("EmployeeID");
-
-                            j.IndexerProperty<int>("ProjectId").HasColumnName("ProjectID");
-                        });
             });
 
             modelBuilder.Entity<Project>(entity =>
@@ -155,9 +137,21 @@ namespace Exercises01_06.Data
                     .IsUnicode(false);
             });
 
-            OnModelCreatingPartial(modelBuilder);
+            modelBuilder.Entity<EmployeeProject>(entity =>
+            {
+                //Generate composite PK
+                entity.HasKey(pk => new { pk.EmployeeId, pk.ProjectId });
+
+                //configure FKs
+                entity.HasOne(ep => ep.Employee)
+                    .WithMany(e => e.EmployeesProjects)
+                    .HasForeignKey(ep => ep.EmployeeId);
+
+                entity.HasOne(ep => ep.Project)
+                    .WithMany(p => p.EmployeesProjects)
+                    .HasForeignKey(ep => ep.ProjectId);
+            });
         }
 
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

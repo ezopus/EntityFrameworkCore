@@ -1,11 +1,11 @@
-﻿namespace Exercises01_06.Models;
+﻿namespace SoftUni.Models;
 public class Employee
 {
     public Employee()
     {
         Departments = new HashSet<Department>();
         InverseManager = new HashSet<Employee>();
-        Projects = new HashSet<Project>();
+        EmployeesProjects = new HashSet<EmployeeProject>();
     }
 
     public int EmployeeId { get; set; }
@@ -14,16 +14,17 @@ public class Employee
     public string? MiddleName { get; set; }
     public string JobTitle { get; set; } = null!;
     public int DepartmentId { get; set; }
+    public virtual Department Department { get; set; } = null!;
     public int? ManagerId { get; set; }
     public DateTime HireDate { get; set; }
     public decimal Salary { get; set; }
     public int? AddressId { get; set; }
 
     public virtual Address? Address { get; set; }
-    public virtual Department Department { get; set; } = null!;
     public virtual Employee? Manager { get; set; }
     public virtual ICollection<Department> Departments { get; set; }
     public virtual ICollection<Employee> InverseManager { get; set; }
-    public virtual ICollection<Project> Projects { get; set; }
+    public virtual ICollection<EmployeeProject> EmployeesProjects { get; set; }
+
 }
 
