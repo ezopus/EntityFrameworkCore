@@ -19,14 +19,14 @@ namespace SoftUni.Data
         public virtual DbSet<Employee> Employees { get; set; } = null!;
         public virtual DbSet<Project> Projects { get; set; } = null!;
         public virtual DbSet<Town> Towns { get; set; } = null!;
-        public virtual DbSet<EmployeeProject> EmployeesProjects { get; set; } = null!;
 
+        public virtual DbSet<EmployeeProject> EmployeesProjects { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder
-                    .UseSqlServer("Server=.;Database=SoftUni;Integrated Security=True;");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=.;Database=SoftUni;Integrated Security=True;TrustServerCertificate=True");
             }
         }
 
@@ -93,7 +93,7 @@ namespace SoftUni.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Salary).HasColumnType("money");
+                entity.Property(e => e.Salary).HasColumnType("decimal(15, 4)");
 
                 entity.HasOne(d => d.Address)
                     .WithMany(p => p.Employees)
@@ -139,10 +139,10 @@ namespace SoftUni.Data
 
             modelBuilder.Entity<EmployeeProject>(entity =>
             {
-                //Generate composite PK
+                //generate composite key
                 entity.HasKey(pk => new { pk.EmployeeId, pk.ProjectId });
 
-                //configure FKs
+                //configure foreign keys
                 entity.HasOne(ep => ep.Employee)
                     .WithMany(e => e.EmployeesProjects)
                     .HasForeignKey(ep => ep.EmployeeId);
@@ -151,7 +151,7 @@ namespace SoftUni.Data
                     .WithMany(p => p.EmployeesProjects)
                     .HasForeignKey(ep => ep.ProjectId);
             });
-        }
 
+        }
     }
 }
