@@ -12,7 +12,7 @@ using P01_StudentSystem.Data;
 namespace P01_StudentSystem.Migrations
 {
     [DbContext(typeof(StudentSystemContext))]
-    [Migration("20240707154127_InitialSetup")]
+    [Migration("20240709162521_InitialSetup")]
     partial class InitialSetup
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,10 +33,12 @@ namespace P01_StudentSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CourseId"), 1L, 1);
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("EndDate")
+                    b.Property<DateTime?>("EndDate")
+                        .IsRequired()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -65,6 +67,7 @@ namespace P01_StudentSystem.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HomeworkId"), 1L, 1);
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
@@ -101,14 +104,15 @@ namespace P01_StudentSystem.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasMaxLength(50)
-                        .IsUnicode(true)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("ResourceType")
                         .HasColumnType("int");
 
                     b.Property<string>("Url")
+                        .IsRequired()
                         .IsUnicode(false)
                         .HasColumnType("varchar(max)");
 
@@ -137,6 +141,7 @@ namespace P01_StudentSystem.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasMaxLength(10)
                         .IsUnicode(false)
                         .HasColumnType("varchar(10)");
@@ -154,7 +159,7 @@ namespace P01_StudentSystem.Migrations
                     b.Property<int>("StudentId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CourseId")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.HasKey("StudentId", "CourseId");
@@ -196,21 +201,21 @@ namespace P01_StudentSystem.Migrations
 
             modelBuilder.Entity("P01_StudentSystem.Data.Models.StudentCourse", b =>
                 {
-                    b.HasOne("P01_StudentSystem.Data.Models.Course", "CourseName")
+                    b.HasOne("P01_StudentSystem.Data.Models.Course", "Course")
                         .WithMany("StudentsCourses")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("P01_StudentSystem.Data.Models.Student", "StudentName")
+                    b.HasOne("P01_StudentSystem.Data.Models.Student", "Student")
                         .WithMany("StudentsCourses")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("CourseName");
+                    b.Navigation("Course");
 
-                    b.Navigation("StudentName");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("P01_StudentSystem.Data.Models.Course", b =>
