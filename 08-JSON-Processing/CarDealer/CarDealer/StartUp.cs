@@ -312,7 +312,7 @@ namespace CarDealer
                         s.Car.TraveledDistance
                     },
                     customerName = s.Customer.Name,
-                    discount = s.Discount.ToString(),
+                    discount = s.Discount.ToString("f2"),
                     price = s.Car.PartsCars.Sum(p => p.Part.Price).ToString("f2"),
                     priceWithDiscount =
                         Math.Round(s.Car.PartsCars
