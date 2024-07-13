@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CarDealer.Models;
+﻿using CarDealer.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarDealer.Data
 {
@@ -13,7 +13,7 @@ namespace CarDealer.Data
             : base(options)
         {
         }
-      
+
         public DbSet<Car> Cars { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Part> Parts { get; set; }
