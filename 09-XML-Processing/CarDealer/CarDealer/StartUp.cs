@@ -56,6 +56,7 @@ public class StartUp
 
         //19. Export Sales with Applied Discount
         Console.WriteLine(GetSalesWithAppliedDiscount(dbContext));
+
     }
 
     public static string ImportSuppliers(CarDealerContext context, string inputXml)
@@ -292,17 +293,39 @@ public class StartUp
 
     public static string GetTotalSalesByCustomer(CarDealerContext context)
     {
-        IMapper mapper = InitializeMapper();
         XmlHelper xmlHelper = new XmlHelper();
 
-        var customers = context
+        var customersRaw = context
             .Customers
             .Where(s => s.Sales.Any())
-            .ProjectTo<ExportCustomerTotalSaleDto>(mapper.ConfigurationProvider)
-            .OrderByDescending(c => c.SpentMoney)
+            .Select(s => new
+            {
+                FullName = s.Name,
+                BoughtCars = s.Sales.Count,
+                SpentMoney = s.Sales.SelectMany(c => c.Car.PartsCars).Sum(p => p.Part.Price),
+                IsYoung = s.IsYoungDriver,
+            })
             .ToArray();
 
-        return xmlHelper.Serialize(customers, "customers");
+        ICollection<ExportCustomerTotalSaleDto> customers = new List<ExportCustomerTotalSaleDto>();
+
+        foreach (var c in customersRaw)
+        {
+            var customer = new ExportCustomerTotalSaleDto()
+            {
+                FullName = c.FullName,
+                BoughtCars = c.BoughtCars,
+                SpentMoney = c.IsYoung
+                    ? Math.Round(c.SpentMoney * (decimal)0.95, 2, MidpointRounding.ToZero)
+                    : c.SpentMoney,
+            };
+
+            customers.Add(customer);
+        }
+
+        var customerOutput = customers.OrderByDescending(c => c.SpentMoney).ToArray();
+
+        return xmlHelper.Serialize(customerOutput, "customers");
     }
 
     public static string GetSalesWithAppliedDiscount(CarDealerContext context)
