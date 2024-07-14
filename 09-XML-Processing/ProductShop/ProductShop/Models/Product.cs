@@ -1,4 +1,6 @@
-﻿namespace ProductShop.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ProductShop.Models
 {
     using System.Collections.Generic;
 
@@ -6,7 +8,7 @@
     {
         public Product()
         {
-            this.CategoryProducts = new List<CategoryProduct>();
+            this.CategoryProducts = new HashSet<CategoryProduct>();
         }
 
         public int Id { get; set; }
@@ -16,11 +18,12 @@
         public decimal Price { get; set; }
 
         public int SellerId { get; set; }
-        public User Seller { get; set; } = null!;
+        public virtual User Seller { get; set; } = null!;
 
+        [ForeignKey(nameof(Buyer))]
         public int? BuyerId { get; set; }
-        public User Buyer { get; set; } = null!;
+        public virtual User? Buyer { get; set; }
 
-        public ICollection<CategoryProduct> CategoryProducts { get; set; }
+        public virtual ICollection<CategoryProduct> CategoryProducts { get; set; }
     }
 }
