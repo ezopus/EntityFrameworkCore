@@ -336,7 +336,19 @@ public class StartUp
         var sales = context
             .Sales
             .Include(s => s.Customer)
-            .ProjectTo<ExportSalesWithDiscountDto>(mapper.ConfigurationProvider)
+            .Select(s => new ExportSalesWithDiscountDto()
+            {
+                SaleCar = new ExportSaleCarDto()
+                {
+                    Make = s.Car.Make,
+                    Model = s.Car.Model,
+                    TraveledDistance = s.Car.TraveledDistance,
+                },
+                Discount = s.Discount,
+                CustomerName = s.Customer.Name,
+                Price = s.Car.PartsCars.Sum(s => s.Part.Price),
+                PriceWithDiscount = Math.Round((double)(s.Car.PartsCars.Sum(pc => pc.Part.Price) * (1 - s.Discount / 100)), 4),
+            })
             .ToArray();
 
         return xmlHelper.Serialize(sales, "sales");
