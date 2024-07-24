@@ -1,13 +1,9 @@
 ﻿namespace Trucks
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.IO;
-    using System.Globalization;
-
-    using AutoMapper;
-    using Microsoft.EntityFrameworkCore;
-
-    using Data;
 
     public class StartUp
     {
