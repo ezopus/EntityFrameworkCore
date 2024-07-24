@@ -1,11 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Globalization;
-
-using AutoMapper;
+﻿using Footballers.Data;
 using Microsoft.EntityFrameworkCore;
-
-using Footballers.Data;
+using System.Globalization;
 
 namespace Footballers
 {
